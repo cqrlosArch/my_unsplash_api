@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import axios from 'axios';
+import { getImagesDB, removeImageDB, addImageDB } from '../api/connect';
 
 export const AppContext = React.createContext();
 
@@ -8,16 +8,18 @@ export const AppContextProvider = ({ children }) => {
   const [filterPhotos, setFilterPhotos] = useState();
   const [isModalAdd, setIsModalAdd] = useState(false);
 
-  // const addNewPhoto = async (e, data) => {
-  //   e.preventDefault();
-  //   await addPhoto(data);
+  const addNewPhoto = async (e, data) => {
+    e.preventDefault();
+    console.log(data);
+    await addImageDB(data);
+    await getDataDB();
+    setIsModalAdd(false);
+  };
 
-  //   setIsModalAdd(false);
-  // };
-
-  // const deletePhoto = (id) => {
-  //   removePhoto(id);
-  // };
+  const deletePhoto = async (id) => {
+    await removeImageDB(id);
+    await getDataDB();
+  };
 
   const openModalAdd = () => {
     setIsModalAdd(true);
@@ -38,22 +40,13 @@ export const AppContextProvider = ({ children }) => {
     [photos]
   );
 
-  const getDataDB = useCallback(() => {
-    // db.collection('photos')
-    //   .orderBy('timestamp', 'desc')
-    //   .onSnapshot((querySnapshot) => {
-    //     let photosArr = [];
-    //     querySnapshot.forEach((doc) => {
-    //       photosArr.push({
-    //         id: doc.id,
-    //         label: doc.data().label,
-    //         url: doc.data().url,
-    //       });
-    //     });
-   
-        setPhotos(photosArr);
-        setFilterPhotos(photosArr);
-   
+  const getDataDB = useCallback(async () => {
+    const res = await getImagesDB();
+    console.log(res.images);
+
+    setPhotos(res.images);
+
+    setFilterPhotos(res.images);
   }, []);
 
   useEffect(() => {

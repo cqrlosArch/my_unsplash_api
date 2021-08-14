@@ -6,8 +6,9 @@ require("dotenv").config();
 const product = require("./routes/images.js");
 
 //Middlewares
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors());
 
 //Routes
 app.use("/api/images", product);

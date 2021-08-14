@@ -9,27 +9,28 @@ async function getImages(req, res) {
 
 async function addImage(req, res) {
   await connectionDB();
-  const body = req.body;
-
-  Image.create(body)
-    .then(() => {
-      res.status(201).json({
-        state: true,
-        code: 201,
-        message: 'Created',
-      });
-    })
-    .catch((error) => {
-      console.log(error);
-      res.json({
-        state: false,
-        code: 400,
-        message:
-          error._message === 'Image validation failed'
-            ? 'Validation failed'
-            : 'An error has ocurred',
-      });
+  console.log(req.body)
+  try {
+    const { url, label } = req.body;
+    console.log(url, label);
+    const newImage = Image({ url, label });
+    await newImage.save();
+    res.status(201).json({
+      state: true,
+      code: 201,
+      message: 'Created',
     });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      state: false,
+      code: 400,
+      message:
+        error._message === 'Image validation failed'
+          ? 'Validation failed'
+          : 'An error has ocurred',
+    });
+  }
 }
 
 async function deleteImage(req, res) {
