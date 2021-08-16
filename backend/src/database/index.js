@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 
-const {NOTES_APP_MONGODB_HOST, NOTES_APP_MONGODB_DATABASE} = process.env
-
-const MONGODB_URI=`mongodb://${NOTES_APP_MONGODB_HOST}/${NOTES_APP_MONGODB_DATABASE}`
+const { MONGODB_URI } = process.env;
 
 console.log(MONGODB_URI);
 const connectionDB = async () => {
@@ -10,7 +8,7 @@ const connectionDB = async () => {
     await mongoose.connect(MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useCreateIndex: true
+      useCreateIndex: true,
     });
     console.log('Database connected');
   } catch (error) {
@@ -18,4 +16,4 @@ const connectionDB = async () => {
   }
 };
 
-module.exports =connectionDB;
+module.exports = connectionDB;
