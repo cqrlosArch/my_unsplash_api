@@ -9,10 +9,10 @@ async function getImages(req, res) {
 
 async function addImage(req, res) {
   await connectionDB();
-  console.log(req.body)
+
   try {
     const { url, label } = req.body;
-    console.log(url, label);
+
     const newImage = Image({ url, label });
     await newImage.save();
     res.status(201).json({
@@ -21,7 +21,7 @@ async function addImage(req, res) {
       message: 'Created',
     });
   } catch (error) {
-    console.log(error);
+   
     res.json({
       state: false,
       code: 400,
