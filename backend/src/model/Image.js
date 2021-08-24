@@ -20,7 +20,7 @@ const imageSchema = new Schema(
 );
 
 imageSchema.set('toJSON', {
-  transform: (_, ret) => {
+  transform: (doc, ret) => {
     delete ret._id;
   },
 });
