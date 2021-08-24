@@ -12,11 +12,17 @@ const imageSchema = new Schema(
       type: String,
       required: true,
       trim: true,
-    }
+    },
   },
   {
     timestamps: true,
   }
 );
+
+imageSchema.set('toJSON', {
+  transform: (_, ret) => {
+    delete ret._id;
+  },
+});
 
 module.exports = model('Image', imageSchema);
