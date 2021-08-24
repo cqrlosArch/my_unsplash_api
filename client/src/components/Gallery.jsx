@@ -19,9 +19,9 @@ const Gallery = React.memo(() => {
     <GalleryStyled>
       {filterPhotos?.map((data) => (
         <Photo
-          key={data._id}
+          key={data.id}
           photo={data}
-          deletePhoto={() => deletePhoto(data._id)}
+          deletePhoto={() => deletePhoto(data.id)}
         />
       ))}
     </GalleryStyled>
