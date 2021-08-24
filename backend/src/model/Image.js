@@ -19,6 +19,7 @@ const imageSchema = new Schema(
   }
 );
 
+//Delete _id from response
 imageSchema.set('toJSON', {
   transform: (doc, ret) => {
     delete ret._id;
